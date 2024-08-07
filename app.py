@@ -4,10 +4,10 @@ from datetime import datetime
 import openpyxl
 import logging
 import os
-app.secret_key = os.environ.get('SECRET_KEY', 'fallback_secret_key')
+
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key_here"  # Replace with a strong secret key
+app.secret_key = os.environ.get('SECRET_KEY', 'fallback_secret_key')
 
 attendance_file = "attendance.xlsx"
 
