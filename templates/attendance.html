@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Attendance System - Attendance List{% endblock %}
+
+{% block content %}
+    <section class="attendance-list">
+        <h2>Attendance List</h2>
+        {% if attendance %}
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for name, time in attendance.items() %}
+                        <tr>
+                            <td>{{ name }}</td>
+                            <td>{{ time }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-attendance">No attendance records found.</p>
+        {% endif %}
+    </section>
+    <div class="button-container">
+        <a href="{{ url_for('index') }}" class="button back-button">Back</a>
+        <a href="{{ url_for('home') }}" class="button exit-button">Exit</a>
+    </div>
+{% endblock %}

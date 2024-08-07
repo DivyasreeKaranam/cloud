@@ -1,0 +1,410 @@
+/* Add these styles to your existing styles.css file */
+
+/* Home page specific styles */
+.home-page {
+    background: url('../static/institute_photo.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Header and navigation */
+header {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav ul li {
+    margin-left: 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    color: #5bc0de;
+}
+
+/* Main container */
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Heading */
+.heading {
+    font-size: 5em;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Login button */
+.login-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 2em;
+    color: #fff;
+    background-color: #5bc0de;
+    text-decoration: none;
+    border-radius: 35px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.login-button:hover {
+    background-color: #31b0d5;
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9em;
+}
+
+/* Add these styles to your existing styles.css file */
+
+/* Login page specific styles */
+.login-page {
+    background: linear-gradient(135deg, #0275d8, #5bc0de);
+}
+
+/* Login container */
+.login-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-form h2 {
+    color: #0275d8;
+    margin-bottom: 1.5rem;
+    font-size: 2em;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.login-form .login-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #0275d8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-form .login-button:hover {
+    background-color: #025aa5;
+}
+
+.error-message {
+    color: #d9534f;
+    margin-bottom: 1rem;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+/* Add these styles to your existing styles.css file */
+
+/* Attendance page specific styles */
+.attendance-page {
+    background-color: #f9f9f9;
+}
+
+/* Attendance form */
+.attendance-form {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.attendance-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.attendance-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.attendance-form input,
+.attendance-form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.attendance-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 12 12'%3E%3Cpath d='M6 8.825l-4.475-4.475 1.06-1.06L6 6.705 9.415 3.29l1.06 1.06L6 8.825z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1em;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #5bc0de;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #31b0d5;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .attendance-form {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+}
+
+/* Add these styles to your existing styles.css file */
+
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header styles */
+header {
+    background-color: #0275d8;
+    color: #fff;
+    padding: 1rem 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Main content styles */
+main.container {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Footer styles */
+footer {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        margin-top: 1rem;
+    }
+
+    nav ul li {
+        margin-left: 0;
+        margin-right: 1rem;
+    }
+}
+
+/* Attendance List Styles */
+.attendance-list {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.attendance-list h2 {
+    color: #0275d8;
+    margin-bottom: 1rem;
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.attendance-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+}
+
+.attendance-table tr:last-child td {
+    border-bottom: none;
+}
+
+.attendance-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.no-attendance {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+}
+
+.back-button {
+    background-color: #5bc0de;
+    color: #fff;
+}
+
+.back-button:hover {
+    background-color: #31b0d5;
+}
+
+.exit-button {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+.exit-button:hover {
+    background-color: #c9302c;
+}
+
+/* Responsive design for the table */
+@media (max-width: 600px) {
+    .attendance-table {
+        font-size: 0.9em;
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+        padding: 0.5rem;
+    }
+}
