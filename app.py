@@ -1,10 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import openpyxl
 import logging
 import os
-
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'fallback_secret_key')
@@ -15,7 +14,6 @@ attendance_file = "attendance.xlsx"
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 def init_attendance_file():
     try:
         wb = openpyxl.load_workbook(attendance_file)
@@ -23,21 +21,18 @@ def init_attendance_file():
         wb = openpyxl.Workbook()
         sheet = wb.active
         sheet.title = "Attendance"
-        sheet.append(["Name", "Subject", "Date", "Time"])
+        sheet.append(["ID", "Name", "Subject", "Date", "Time"])
         wb.save(attendance_file)
         logger.info(f"Created new attendance file: {attendance_file}")
-
 
 init_attendance_file()
 
 # Sample users (for demonstration purposes)
 users = {"admin": generate_password_hash("password")}
 
-
 @app.route("/")
 def home():
     return render_template("home.html")
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -52,13 +47,11 @@ def login():
             flash("Invalid credentials", "error")
     return render_template("login.html")
 
-
 @app.route("/logout")
 def logout():
     session.pop("username", None)
     flash("Logged out successfully!", "success")
     return redirect(url_for("login"))
-
 
 @app.route("/index")
 def index():
@@ -67,7 +60,6 @@ def index():
     else:
         flash("Please log in to access this page", "error")
         return redirect(url_for("login"))
-
 
 @app.route("/take_attendance", methods=["POST"])
 def take_attendance():
@@ -81,7 +73,8 @@ def take_attendance():
 
             wb = openpyxl.load_workbook(attendance_file)
             sheet = wb.active
-            sheet.append([name, subject, date, time])
+            row_id = sheet.max_row  # Use row number as unique identifier
+            sheet.append([row_id, name, subject, date, time])
             wb.save(attendance_file)
 
             flash("Attendance recorded successfully!", "success")
@@ -94,7 +87,6 @@ def take_attendance():
         flash("Please log in to take attendance", "error")
         return redirect(url_for("login"))
 
-
 @app.route("/attendance")
 def show_attendance():
     if "username" in session:
@@ -103,10 +95,8 @@ def show_attendance():
             sheet = wb.active
             attendance = {}
             for row in sheet.iter_rows(min_row=2, values_only=True):
-                name = row[0]
-                time = f"{row[2]} {row[3]}"
-                subject = row[1]
-                attendance[f"{name} ({subject})"] = time
+                row_id, name, subject, date, time = row
+                attendance[f"{name} ({subject})"] = {"time": f"{date} {time}", "id": row_id}
             return render_template("attendance.html", attendance=attendance)
         except Exception as e:
             logger.error(f"Error displaying attendance: {str(e)}")
@@ -116,7 +106,25 @@ def show_attendance():
         flash("Please log in to view attendance", "error")
         return redirect(url_for("login"))
 
-
+@app.route("/delete_entry/<int:row_id>", methods=["POST"])
+def delete_entry(row_id):
+    if "username" in session:
+        try:
+            wb = openpyxl.load_workbook(attendance_file)
+            sheet = wb.active
+            
+            # Find the row to delete
+            for row in range(2, sheet.max_row + 1):  # Start from 2 to skip header
+                if sheet.cell(row=row, column=1).value == row_id:
+                    sheet.delete_rows(row)
+                    wb.save(attendance_file)
+                    return jsonify({"success": True, "message": "Entry deleted successfully"})
+            
+            return jsonify({"success": False, "message": "Entry not found"})
+        except Exception as e:
+            return jsonify({"success": False, "message": str(e)})
+    else:
+        return jsonify({"success": False, "message": "Please log in to delete entries"})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
