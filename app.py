@@ -3,6 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import openpyxl
 import logging
+import os
+app.secret_key = os.environ.get('SECRET_KEY', 'fallback_secret_key')
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key_here"  # Replace with a strong secret key
@@ -115,5 +117,5 @@ def show_attendance():
         return redirect(url_for("login"))
 
 
-if __name__ == "__main__":
-    app.run(debug=True)  # Set to False in production
+
+app.run(debug=True)  # Set to False in production
