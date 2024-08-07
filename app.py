@@ -5,14 +5,14 @@ import openpyxl
 import logging
 import os
 
-app = Flask(__name__)
+app = Flask(_name_)
 app.secret_key = os.environ.get('SECRET_KEY', 'fallback_secret_key')
 
 attendance_file = "attendance.xlsx"
 
 # Configure logging to output to the console
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(_name_)
 
 def init_attendance_file():
     try:
@@ -95,8 +95,8 @@ def show_attendance():
             sheet = wb.active
             attendance = {}
             for row in sheet.iter_rows(min_row=2, values_only=True):
-                row_id, name, subject, date, time = row
-                attendance[f"{name} ({subject})"] = {"time": f"{date} {time}", "id": row_id}
+                id, name, subject, date, time = row
+                attendance[id] = (f"{name} ({subject})", f"{date} {time}")
             return render_template("attendance.html", attendance=attendance)
         except Exception as e:
             logger.error(f"Error displaying attendance: {str(e)}")
@@ -106,26 +106,30 @@ def show_attendance():
         flash("Please log in to view attendance", "error")
         return redirect(url_for("login"))
 
-@app.route("/delete_entry/<int:row_id>", methods=["POST"])
-def delete_entry(row_id):
+@app.route("/delete_attendance/<int:id>", methods=["POST"])
+def delete_attendance(id):
     if "username" in session:
         try:
             wb = openpyxl.load_workbook(attendance_file)
             sheet = wb.active
             
-            # Find the row to delete
+            # Find the row with the matching ID and delete it
             for row in range(2, sheet.max_row + 1):  # Start from 2 to skip header
-                if sheet.cell(row=row, column=1).value == row_id:
-                    sheet.delete_rows(row)
-                    wb.save(attendance_file)
-                    return jsonify({"success": True, "message": "Entry deleted successfully"})
+                if sheet.cell(row=row, column=1).value == id:
+                    sheet.delete_rows(row, 1)
+                    break
             
-            return jsonify({"success": False, "message": "Entry not found"})
+            wb.save(attendance_file)
+            flash("Attendance record deleted successfully!", "success")
         except Exception as e:
-            return jsonify({"success": False, "message": str(e)})
+            logger.error(f"Error deleting attendance: {str(e)}")
+            flash("An error occurred while deleting the attendance record", "error")
+        
+        return redirect(url_for("show_attendance"))
     else:
-        return jsonify({"success": False, "message": "Please log in to delete entries"})
+        flash("Please log in to delete attendance records", "error")
+        return redirect(url_for("login"))
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
